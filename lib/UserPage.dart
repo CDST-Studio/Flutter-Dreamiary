@@ -2,47 +2,106 @@ import 'package:flutter/material.dart';
 
 class DreamiaryHome extends StatelessWidget {
   List<String> test = ["TEST1", "TEST2", "TEST3", "TEST4", "TEST5", "TEST6"];
+  List<String> menu = ["일기 작성", "그림일기 작성", "일기 목록", "커뮤니티", "설정"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("꿈일기"),
-      ),
-      body: Column(
-        children: [
-          Container(
-            height: 150,
-            color: Colors.amber,
+        appBar: AppBar(
+          title: Text("꿈일기"),
+        ),
+        body: Column(
+          children: [
+            Container(
+              height: 150,
+              color: Colors.amber,
 
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              itemCount: test.length, // ONLY effected on itemBuilder
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: test.length, // ONLY effected on itemBuilder
 
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: const EdgeInsets.all(16),
-                  padding: const EdgeInsets.all(8),
-                  width: 90,
-                  height: 100,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    margin: const EdgeInsets.all(8),
 
-                  color: Colors.amberAccent,
+                    child: ButtonTheme(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
 
-                  child: Center(
-                      child: Text("일기 ${index+1}. ${test[index]}")
-                  ),
-                );
-              },
-
-              separatorBuilder: (BuildContext context, int index) {
-                if (index == 0) return SizedBox.shrink(); // Empty widget
-                return const Divider();
-              },
+                      child: RaisedButton(
+                          onPressed: () {},
+                          color: Colors.amberAccent,
+                          child: Text("일기 ${index + 1}. ${test[index]}")),
+                    ),
+                  );
+                },
+              ),
             ),
-          )
-        ],
-      )
+
+            Expanded(child: Container(
+              
+            )),
+
+            Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              color: Colors.amber,
+
+              child: ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: menu.length,
+                shrinkWrap: true,
+
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    width: MediaQuery.of(context).size.width / menu.length,
+
+                    child: ButtonTheme(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+
+                      child: RaisedButton(
+                        onPressed: () {},
+                        color: Colors.amber,
+                        child: Text(
+                          "${menu[index]}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 11,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+
+                separatorBuilder: (BuildContext context, int index) {
+                  return Container(
+                    margin: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+
+                    child: VerticalDivider(
+                      width: 2,
+                      thickness: 1.5,
+                      color: Colors.black,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        )
     );
   }
+}
+
+class WriteDiary {
+
+}
+
+class WritePictureDiary {
+
 }
