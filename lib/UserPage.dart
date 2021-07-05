@@ -97,11 +97,3 @@ class DreamiaryHome extends StatelessWidget {
     );
   }
 }
-
-class WriteDiary {
-
-}
-
-class WritePictureDiary {
-
-}
