@@ -17,19 +17,32 @@ class WritePictureDiary extends StatefulWidget{
 }
 
 class _WriteDiaryState extends State<WriteDiary> {
+  final titleCtl = TextEditingController();
+  final contentCtl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("일기 작성"),
       ),
+
       body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("Assets/Thema/WriteDiary.png"),
+              fit: BoxFit.fill,
+            ),
+        ),
+
         child: Column(
           children: [
             Container (
-              margin: const EdgeInsets.fromLTRB(125, 25, 125, 25),
+              margin: const EdgeInsets.fromLTRB(125, 10, 125, 25),
               child: TextField(
+                controller: titleCtl,
                 textAlign: TextAlign.center,
+
                 decoration: InputDecoration(
                     hintText: "제목",
                     hintStyle: TextStyle(
@@ -40,12 +53,15 @@ class _WriteDiaryState extends State<WriteDiary> {
             ),
 
             Expanded(child: Container(
-              margin: const EdgeInsets.only(left: 30, right: 30),
+              margin: const EdgeInsets.only(left: 45, right: 45),
               child: TextField(
+                controller: contentCtl,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
 
-                decoration: InputDecoration(),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
               ),
             )),
 
@@ -57,6 +73,7 @@ class _WriteDiaryState extends State<WriteDiary> {
                   margin: const EdgeInsets.all(8),
                   
                   child: FloatingActionButton(
+                    heroTag: "backBtn",
                     child: Text(
                       "돌아가기",
                       style: TextStyle(
@@ -75,9 +92,12 @@ class _WriteDiaryState extends State<WriteDiary> {
                   margin: const EdgeInsets.all(8),
 
                   child: FloatingActionButton(
+                    heroTag: "saveBtn",
                     child: Icon(Icons.plus_one),
 
-                    onPressed: () {
+                    onPressed: () async {
+                      final filename = titleCtl.text;
+
                       Navigator.pop(context);
                     },
                   ),
@@ -99,6 +119,13 @@ class _WritePictureDiaryState extends State<WritePictureDiary> {
         title: Text("일기 작성"),
       ),
       body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("Assets/Thema/WriteDiary.png"),
+            fit: BoxFit.fill,
+          ),
+        ),
+
         child: Column(
           children: [
             Container(
@@ -122,7 +149,7 @@ class _WritePictureDiaryState extends State<WritePictureDiary> {
             ),
 
             Container (
-              margin: const EdgeInsets.fromLTRB(125, 25, 125, 25),
+              margin: const EdgeInsets.fromLTRB(125, 10, 125, 25),
               child: TextField(
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
@@ -140,7 +167,9 @@ class _WritePictureDiaryState extends State<WritePictureDiary> {
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
 
-                decoration: InputDecoration(),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
               ),
             )),
 
@@ -152,6 +181,7 @@ class _WritePictureDiaryState extends State<WritePictureDiary> {
                   margin: const EdgeInsets.all(8),
 
                   child: FloatingActionButton(
+                    heroTag: "backBtn",
                     child: Text(
                       "돌아가기",
                       style: TextStyle(
@@ -170,6 +200,7 @@ class _WritePictureDiaryState extends State<WritePictureDiary> {
                   margin: const EdgeInsets.all(8),
 
                   child: FloatingActionButton(
+                    heroTag: "saveBtn",
                     child: Icon(Icons.plus_one),
 
                     onPressed: () {
