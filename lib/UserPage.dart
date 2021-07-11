@@ -1,12 +1,19 @@
 import 'package:dreamiary/WriteDiary.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class DreamiaryHome extends StatelessWidget {
-  List<String> test = ["TEST1", "TEST2", "TEST3", "TEST4", "TEST5", "TEST6"];
-  List<String> menu = ["일기 작성", "그림일기 작성", "일기 목록", "커뮤니티", "설정"];
+  // Test userName = Khan
+  DatabaseReference ref = new FirebaseDatabase().reference();
+
+  List<String> _diaryList = [];
+  List<String> _menu = ["일기 작성", "그림일기 작성", "일기 목록", "커뮤니티", "설정"];
 
   @override
   Widget build(BuildContext context) {
+    ref.child("Khan").reference().once().then((DataSnapshot data) {
+      print(data.key);
+    });
     return Scaffold(
         appBar: AppBar(
           title: Text("꿈일기"),
@@ -20,7 +27,7 @@ class DreamiaryHome extends StatelessWidget {
 
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: test.length, // ONLY effected on itemBuilder
+                  itemCount: _diaryList.length, // ONLY effected on itemBuilder
 
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
@@ -34,7 +41,11 @@ class DreamiaryHome extends StatelessWidget {
                         child: FlatButton(
                             onPressed: () {},
                             color: Colors.amberAccent,
-                            child: Text("일기 ${index + 1}. ${test[index]}")),
+                            child: Text(
+                              "${_diaryList[index]}",
+                              textAlign: TextAlign.center,
+                            )
+                        ),
                       ),
                     );
                   },
@@ -53,19 +64,19 @@ class DreamiaryHome extends StatelessWidget {
                 child: ListView.separated(
                   physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  itemCount: menu.length,
+                  itemCount: _menu.length,
                   shrinkWrap: true,
 
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
-                      width: MediaQuery.of(context).size.width / menu.length,
+                      width: MediaQuery.of(context).size.width / _menu.length,
                       child: ButtonTheme(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(0),
                         ),
                         child: FlatButton(
                           onPressed: () {
-                            switch(menu[index]) {
+                            switch(_menu[index]) {
                               case "일기 작성" :
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => WriteDiary()));
                                 break;
@@ -82,7 +93,7 @@ class DreamiaryHome extends StatelessWidget {
                           },
                           color: Colors.amber,
                           child: Text(
-                            "${menu[index]}",
+                            "${_menu[index]}",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 11,

@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 
+import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+
 import 'UserPage.dart';
 import 'CommunityPage.dart';
 
-void main() {
+void main() async{
+  // Firebase initialize
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MaterialApp(
     title: "Dreamiary",
     theme: ThemeData(
