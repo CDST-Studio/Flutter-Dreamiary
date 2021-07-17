@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:dreamiary/WriteDiary.dart';
 import 'package:dreamiary/ReadDiary.dart';
-import 'package:dreamiary/DiaryList.dart';
 
-class DreamiaryHome extends StatelessWidget {
+class DiaryList extends StatelessWidget {
   // Test userName = Khan
   DatabaseReference ref = new FirebaseDatabase().reference();
 
@@ -16,15 +15,13 @@ class DreamiaryHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("꿈일기"),
+          title: Text("기록된 일기"),
         ),
         body: Container(
           child: Column(
             children: [
-              Container(
-                height: 150,
-                color: Colors.amber,
 
+              Expanded(child: Container(
                 child: StreamBuilder(
                   stream: ref.child("Khan").reference().onValue,
                   builder: (context, AsyncSnapshot<Event> snap) {
@@ -37,7 +34,6 @@ class DreamiaryHome extends StatelessWidget {
                     }
 
                     return ListView.builder(
-                      scrollDirection: Axis.horizontal,
                       itemCount: _diaryList.length, // ONLY effected on itemBuilder
 
                       itemBuilder: (BuildContext context, int index) {
@@ -65,10 +61,6 @@ class DreamiaryHome extends StatelessWidget {
                     );
                   },
                 ),
-              ),
-
-              Expanded(child: Container(
-
               )),
 
               Container(
@@ -99,7 +91,6 @@ class DreamiaryHome extends StatelessWidget {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => WritePictureDiary()));
                                 break;
                               case "일기 목록" :
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => DiaryList()));
                                 break;
                               case "커뮤니티" :
                                 break;

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'dart:async';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 /**
@@ -25,8 +22,8 @@ class WritePictureDiary extends StatefulWidget{
 }
 
 class _WriteDiaryState extends State<WriteDiary> {
-  final titleCtl = TextEditingController();
-  final contentCtl = TextEditingController();
+  final _titleCtl = TextEditingController();
+  final _contentCtl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +35,7 @@ class _WriteDiaryState extends State<WriteDiary> {
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("Assets/Thema/WriteDiary.png"),
+              image: AssetImage("Assets/Thema/DiaryDefaultThema.png"),
               fit: BoxFit.fill,
             ),
         ),
@@ -48,7 +45,7 @@ class _WriteDiaryState extends State<WriteDiary> {
             Container (
               margin: const EdgeInsets.fromLTRB(125, 10, 125, 25),
               child: TextField(
-                controller: titleCtl,
+                controller: _titleCtl,
                 textAlign: TextAlign.center,
 
                 decoration: InputDecoration(
@@ -63,7 +60,7 @@ class _WriteDiaryState extends State<WriteDiary> {
             Expanded(child: Container(
               margin: const EdgeInsets.only(left: 45, right: 45),
               child: TextField(
-                controller: contentCtl,
+                controller: _contentCtl,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
 
@@ -109,8 +106,8 @@ class _WriteDiaryState extends State<WriteDiary> {
                     ),
 
                     onPressed: () async {
-                      final filename = titleCtl.text;
-                      ref.child("Khan").set({titleCtl.text : contentCtl.text});
+                      final filename = _titleCtl.text;
+                      ref.child("Khan").set({_titleCtl.text : _contentCtl.text});
 
                       Navigator.pop(context);
                     },
@@ -135,7 +132,7 @@ class _WritePictureDiaryState extends State<WritePictureDiary> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("Assets/Thema/WriteDiary.png"),
+            image: AssetImage("Assets/Thema/DiaryDefaultThema.png"),
             fit: BoxFit.fill,
           ),
         ),
