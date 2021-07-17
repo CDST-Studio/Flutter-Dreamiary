@@ -5,10 +5,11 @@ import 'package:dreamiary/WriteDiary.dart';
 import 'package:dreamiary/ReadDiary.dart';
 import 'package:dreamiary/DiaryList.dart';
 
+// Test userName = Khan
+final DatabaseReference ref = new FirebaseDatabase().reference();
+
 class DreamiaryHome extends StatelessWidget {
   // Test userName = Khan
-  DatabaseReference ref = new FirebaseDatabase().reference();
-
   List<String> _diaryList = [];
   List<String> _menu = ["일기 작성", "그림일기 작성", "일기 목록", "커뮤니티", "설정"];
 
@@ -50,8 +51,8 @@ class DreamiaryHome extends StatelessWidget {
                             ),
 
                             child: FlatButton(
-                                onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ReadDiary()));
+                                onPressed: () async{
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ReadDiary(_diaryList[index])));
                                 },
                                 color: Colors.amberAccent,
                                 child: Text(
@@ -90,7 +91,7 @@ class DreamiaryHome extends StatelessWidget {
                           borderRadius: BorderRadius.circular(0),
                         ),
                         child: FlatButton(
-                          onPressed: () {
+                          onPressed: () async{
                             switch(_menu[index]) {
                               case "일기 작성" :
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => WriteDiary()));
