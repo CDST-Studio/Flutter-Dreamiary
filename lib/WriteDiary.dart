@@ -24,10 +24,12 @@ class WritePictureDiary extends StatefulWidget{
 class _WriteDiaryState extends State<WriteDiary> {
   final _titleCtl = TextEditingController();
   final _contentCtl = TextEditingController();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey, // 발급한 키를 Scaffold에 등록
       appBar: AppBar(
         title: Text("일기 작성"),
       ),
@@ -107,9 +109,25 @@ class _WriteDiaryState extends State<WriteDiary> {
 
                     onPressed: () async {
                       final filename = _titleCtl.text;
-                      ref.child("Khan").set({_titleCtl.text : _contentCtl.text});
+                      ref.child("Khan").once().then((DataSnapshot snap) {
+                        if (!snap.value.keys.contains(filename)) {
+                          ref.child("Khan").update({_titleCtl.text : _contentCtl.text});
+                          Navigator.pop(context);
+                        }else {
+                          _scaffoldKey.currentState!.showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                '이미 존재하는 일기의 제목입니다.',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                              ),
 
-                      Navigator.pop(context);
+                              backgroundColor: Colors.teal,
+                              duration: Duration(milliseconds: 1000),
+                            ),
+                          );
+                        }
+                      });
                     },
                   ),
                 ),

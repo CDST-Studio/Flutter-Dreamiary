@@ -3,19 +3,22 @@ import 'package:firebase_database/firebase_database.dart';
 
 // Test userName = Khan
 final DatabaseReference ref = new FirebaseDatabase().reference();
-final String diaryTitle = "";
 
 class ReadDiary extends StatefulWidget {
+  String diaryTitle = "";
   // @required == 무조건 변수를 받아야한다.
-  ReadDiary(@required diaryTitle);
+  ReadDiary(@required this.diaryTitle);
 
   @override
-  _ReadDiaryState createState() => _ReadDiaryState();
+  _ReadDiaryState createState() => _ReadDiaryState(diaryTitle);
 }
 
 class _ReadDiaryState extends State<ReadDiary> {
   final _titleCtl = TextEditingController();
   final _contentCtl = TextEditingController();
+
+  String diaryTitle = "";
+  _ReadDiaryState(@required this.diaryTitle);
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +38,12 @@ class _ReadDiaryState extends State<ReadDiary> {
         child: StreamBuilder(
           stream: ref.child("Khan").reference().onValue,
           builder: (context, AsyncSnapshot<Event> snap) {
-            print(snap.data!.snapshot.value);
-            _titleCtl.text = snap.data!.snapshot.value;
-            _contentCtl.text = diaryTitle;
+            try {
+              _titleCtl.text = diaryTitle;
+              _contentCtl.text = snap.data!.snapshot.value[diaryTitle];
+            }catch(e) {
+              print(e);
+            }
 
             return Column(
               children: [

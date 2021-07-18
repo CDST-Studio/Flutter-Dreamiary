@@ -39,23 +39,53 @@ class DiaryList extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
                           margin: const EdgeInsets.all(8),
-
-                          child: ButtonTheme(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-
-                            child: FlatButton(
-                                onPressed: () async{
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ReadDiary(_diaryList[index])));
-                                },
-                                color: Colors.amberAccent,
-                                child: Text(
-                                  "${_diaryList[index]}",
-                                  textAlign: TextAlign.center,
-                                )
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.black,
+                                width: 1,
+                              ),
                             ),
                           ),
+
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                  onPressed: () async{
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ReadDiary(_diaryList[index])));
+                                  },
+                                  child: Text(
+                                    "${_diaryList[index]}",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  )
+                              ),
+
+                              Container(
+                                width: 35,
+                                height: 35,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.grey,
+                                    width: 1,
+                                  ),
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey,
+                                ),
+
+                                child: IconButton(
+                                  onPressed: () {
+
+                                  },
+                                  icon: Image.asset("Assets/Button/DeleteIcon.png"),
+                                  iconSize: 10,
+                                ),
+                              ),
+                            ],
+                          )
                         );
                       },
                     );
