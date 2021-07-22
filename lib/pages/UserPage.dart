@@ -1,46 +1,87 @@
+import 'package:dreamiary/WriteDiary.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dreamiary/WriteDiary.dart';
 import 'package:dreamiary/ReadDiary.dart';
 import 'package:dreamiary/DiaryList.dart';
+import 'package:dreamiary/pages/LoginPage.dart';
 
 // Test userName = Khan
 final DatabaseReference ref = new FirebaseDatabase().reference();
 
 class DreamiaryHome extends StatelessWidget {
   // Test userName = Khan
+
+  DatabaseReference ref = new FirebaseDatabase().reference();
   List<String> _diaryList = [];
   List<String> _menu = ["일기 작성", "그림일기 작성", "일기 목록", "커뮤니티", "설정"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("꿈일기"),
-        ),
-        body: Container(
-          child: Column(
-            children: [
-              Container(
-                height: 150,
-                color: Colors.amber,
-
-                child: StreamBuilder(
-                  stream: ref.child("Khan").reference().onValue,
-                  builder: (context, AsyncSnapshot<Event> snap) {
-                    try {
-                      for(var diaryTitle in snap.data!.snapshot.value.keys) {
-                        if (!_diaryList.contains(diaryTitle)) _diaryList.add(diaryTitle);
-                      }
-                    }catch(e) {
-                      print(e);
-                    }
-
-                    return ListView.builder(
+        body: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return LoginPage();
+              } else {
+                var currentUser = FirebaseAuth.instance.currentUser;
+                return Scaffold(
+                    appBar: AppBar(
+                      title: Text("꿈일기"),
+                      actions: [
+                        IconButton(
+                            icon: Icon(Icons.account_circle_rounded),
+                            onPressed: (){
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context){
+                                    return AlertDialog(
+                                      title: Text('Login check'),
+                                      content:  SingleChildScrollView(
+                                        child: ListBody (
+                                        children: [
+                                          Text('name: ${currentUser!.displayName} '),
+                                          Text('email: ${currentUser!.email}')
+                                      ],
+                                    ),
+                                    ),
+                                      actions: [
+                                        FlatButton(
+                                            child: Text('Logout'),
+                                            onPressed: FirebaseAuth.instance.signOut),
+                                        FlatButton(
+                                            child: Text('ok'),
+                                            onPressed: Navigator.of(context).pop)
+                                      ],
+                                    );
+                                  }
+                              );
+                            }
+                        )
+                      ]
+                    ),
+                    body: Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 150,
+                            color: Colors.amber,
+                            child: StreamBuilder(
+                              stream: ref.child("Khan").reference().onValue,
+                              builder: (context, AsyncSnapshot<Event> snap) {
+                                try {
+                                  for(var diaryTitle in snap.data!.snapshot.value.keys) {
+                                    if (!_diaryList.contains(diaryTitle)) _diaryList.add(diaryTitle);
+                                  }
+                                }catch(e) {
+                                  print(e);
+                                }
+                            return ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: _diaryList.length, // ONLY effected on itemBuilder
-
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
                           margin: const EdgeInsets.all(8),
@@ -137,6 +178,11 @@ class DreamiaryHome extends StatelessWidget {
             ],
           ),
         )
-    );
+      );
+     }
+    }
+   ));
   }
 }
+
+

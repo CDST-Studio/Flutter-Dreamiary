@@ -36,10 +36,10 @@ class _WriteDiaryState extends State<WriteDiary> {
 
       body: Container(
         decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("Assets/Thema/DiaryDefaultThema.png"),
-              fit: BoxFit.fill,
-            ),
+          image: DecorationImage(
+            image: AssetImage("Assets/Thema/DiaryDefaultThema.png"),
+            fit: BoxFit.fill,
+          ),
         ),
 
         child: Column(
@@ -78,7 +78,7 @@ class _WriteDiaryState extends State<WriteDiary> {
               children: [
                 Container(
                   margin: const EdgeInsets.all(8),
-                  
+
                   child: FloatingActionButton(
                     heroTag: "backBtn",
                     child: Text(
@@ -168,12 +168,12 @@ class _WritePictureDiaryState extends State<WritePictureDiary> {
               ),
 
               decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.all(
+                  border: Border.all(
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.all(
                     Radius.circular(5.0),
-                )
+                  )
               ),
             ),
 
