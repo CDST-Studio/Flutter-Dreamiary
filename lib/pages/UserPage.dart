@@ -13,7 +13,6 @@ final DatabaseReference ref = new FirebaseDatabase().reference();
 
 class DreamiaryHome extends StatelessWidget {
   // Test userName = Khan
-
   DatabaseReference ref = new FirebaseDatabase().reference();
   List<String> _diaryList = [];
   List<String> _menu = ["일기 작성", "그림일기 작성", "일기 목록", "커뮤니티", "설정"];

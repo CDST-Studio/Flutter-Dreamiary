@@ -14,7 +14,7 @@ void main() {
     ),
     home: AnimatedSplashScreen(
       splash: Image.asset("Assets/Image/CDST.png"),
-      nextScreen: LoginHome(), //DreamiaryHome
+      nextScreen: LoginHome(),
       splashTransition: SplashTransition.fadeTransition,
       duration: 2000,
     ),
