@@ -43,7 +43,6 @@ class DreamiaryHome extends StatelessWidget {
                                         child: ListBody (
                                         children: [
                                           Text('name: ${currentUser!.displayName} '),
-                                          Text('email: ${currentUser!.email}')
                                       ],
                                     ),
                                     ),

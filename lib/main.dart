@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 import 'pages/UserPage.dart';
-import 'pages/CommunityPage.dart';
-
-//test test test test test
 
 void main() {
   runApp(MaterialApp(
@@ -37,7 +34,11 @@ class LoginHome extends StatelessWidget {
         }
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
-            home: DreamiaryHome()
+              theme: ThemeData(
+                primaryColor: Colors.deepOrange,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+              ),
+              home: DreamiaryHome()
           );
         }
         return CircularProgressIndicator();
