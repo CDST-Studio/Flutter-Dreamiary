@@ -5,6 +5,8 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'pages/UserPage.dart';
 import 'pages/CommunityPage.dart';
 
+//test
+
 void main() {
   runApp(MaterialApp(
     title: "Dreamiary",
